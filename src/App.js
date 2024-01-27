@@ -13,12 +13,19 @@ export default function App(){
     function clr(){
         setfValue([])
     }
+    function Linethrough(id){
+        setfValue(fValue => fValue.map(
+            item => item.id === id ? {...item,Packed:!item.Packed}
+            : item
+        ))
+
+    }
 
     return (
         <>
         <Header />
         <Form updateValue={updateValue} key={fValue.id}/>
-        <Updates fValue={fValue} removeItem={removeItem} clr  = {clr} />
+        <Updates fValue={fValue} removeItem={removeItem} clr  = {clr} Linethrough={Linethrough} />
         <Footer />
         </>
 
@@ -60,7 +67,7 @@ function FormElement({updateValue}){
         e.preventDefault()
         if(!Input) return;
         const newItem = {
-            Number,Input,Packed:true,id:Date.now()
+            Number,Input,Packed:false,id:Date.now()
         }
 
 
@@ -78,11 +85,13 @@ function FormElement({updateValue}){
         </>
     )
 }
-function Updates({fValue,removeItem,clr}){
+function Updates({fValue,removeItem,clr,Linethrough}){
     return(
         <div id="fair-update">
             <ul>
-                {fValue.map((e)=><li>
+                {fValue.map((e)=><li style={e.Packed ? {textDecoration:"line-through"} : {}} onClick={()=> Linethrough(e.id)}>
+            <input type="checkbox" value={e.Packed} style={{marginRight:"0.5rem"}}/>
+                
                 {e.Number}.{e.Input}
                 <button onClick={()=>removeItem(e.id)}>❌</button>
                 </li>)
