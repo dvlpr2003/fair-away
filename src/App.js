@@ -10,6 +10,7 @@ export default function App(){
      itemsname=fValue.slice()
     .sort((a,b)=>a.Input.localeCompare(b.Input));
     if (sortBy === "normal") itemsname = fValue;
+    if (sortBy === "packed") itemsname=fValue.slice().sort((a,b)=>Number(a.Packed)- Number(b.Packed))
    
     
     function updateValue(item){
@@ -99,19 +100,26 @@ function Updates({fValue,removeItem,clr,Linethrough,setSortBy,itemsname}){
     return(
         <div id="fair-update">
             <ul>
-                {itemsname.map((e)=><li style={e.Packed ? {textDecoration:"line-through"} : {}} onClick={()=> Linethrough(e.id)}>
-            <input type="checkbox" value={e.Packed} style={{marginRight:"0.5rem"}}/>
-                
-                {e.Number}.{e.Input}
+                {itemsname.map((e)=><li >
+
+                            
+                    <input type="checkbox" checked={e.Packed} style={{marginRight:"0.5rem"}} onChange={()=> Linethrough(e.id)}/>
+                    {console.log(`packed :${e.Packed}`)}
+                    <span style={e.Packed ? {textDecoration:"line-through"} : {}} >{e.Number}.{e.Input}</span>
+                        
+                        
                 <button onClick={()=>removeItem(e.id)}>❌</button>
-                </li>)
+                </li>
+                
+                )
                 }
                 
             </ul>
             <div id="clr-btn">
                 <select onChange={(e)=>setSortBy(e.target.value)}>
-                    <option value="normal">Sort by input</option>
-                    <option value="input">Sort by name</option>
+                    <option value="normal">Sort by Input</option>
+                    <option value="input">Sort by Name</option>
+                    <option value="packed">Sort by Packed</option>
                 </select>
                 <button onClick={clr}>Clear Items</button>
             </div>
