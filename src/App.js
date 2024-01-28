@@ -3,6 +3,15 @@ import { useState } from "react"
 import "./App.css"
 export default function App(){
     const [fValue,setfValue] = useState([])
+    const [sortBy,setSortBy] = useState("input")
+
+    let itemsname ;
+    if (sortBy === "input")
+     itemsname=fValue.slice()
+    .sort((a,b)=>a.Input.localeCompare(b.Input));
+    if (sortBy === "normal") itemsname = fValue;
+   
+    
     function updateValue(item){
         setfValue((fValue)=>[...fValue,item])
         console.log(fValue)
@@ -21,11 +30,12 @@ export default function App(){
 
     }
 
+
     return (
         <>
         <Header />
         <Form updateValue={updateValue} key={fValue.id}/>
-        <Updates fValue={fValue} removeItem={removeItem} clr  = {clr} Linethrough={Linethrough} />
+        <Updates fValue={fValue} removeItem={removeItem} clr  = {clr} Linethrough={Linethrough} setSortBy={setSortBy}  itemsname={itemsname}/>
         <Footer />
         </>
 
@@ -38,7 +48,7 @@ function Header(){
         </div>
     )
 }
-function Form({updateValue,y}){
+function Form({updateValue}){
 
     return(
         <form>
@@ -85,11 +95,11 @@ function FormElement({updateValue}){
         </>
     )
 }
-function Updates({fValue,removeItem,clr,Linethrough}){
+function Updates({fValue,removeItem,clr,Linethrough,setSortBy,itemsname}){
     return(
         <div id="fair-update">
             <ul>
-                {fValue.map((e)=><li style={e.Packed ? {textDecoration:"line-through"} : {}} onClick={()=> Linethrough(e.id)}>
+                {itemsname.map((e)=><li style={e.Packed ? {textDecoration:"line-through"} : {}} onClick={()=> Linethrough(e.id)}>
             <input type="checkbox" value={e.Packed} style={{marginRight:"0.5rem"}}/>
                 
                 {e.Number}.{e.Input}
@@ -99,6 +109,10 @@ function Updates({fValue,removeItem,clr,Linethrough}){
                 
             </ul>
             <div id="clr-btn">
+                <select onChange={(e)=>setSortBy(e.target.value)}>
+                    <option value="normal">Sort by input</option>
+                    <option value="input">Sort by name</option>
+                </select>
                 <button onClick={clr}>Clear Items</button>
             </div>
         </div>

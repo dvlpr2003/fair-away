@@ -77,18 +77,24 @@ li button{
     align-items: center;
     justify-self: end;
     font-family: "Krub", sans-serif;
+    gap: 3rem
 
 }
 @import url('https://fonts.googleapis.com/css2?family=Krub:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
-#clr-btn button {
+#clr-btn button , #clr-btn select{
     width: 7rem;
     height: 2rem;
     background-color: #9c9de5;
     border: 1px solid #9c9de5;
     border-radius: 10px;
+    outline: none;
 
 
+}
+#clr-btn select{
+    width: 8rem;
+    padding-left:0.5rem; 
 }
 @import url('https://fonts.googleapis.com/css2?family=Coming+Soon&display=swap');
 footer {
